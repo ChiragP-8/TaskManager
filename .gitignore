@@ -1,0 +1,21 @@
+# IntelliJ IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Compiled class files
+*.class
+
+# Build directories
+out/
+target/
+bin/
+
+# Database credentials/local configs
+*.properties
+*.env
+
+# Logs and temp files
+*.log
+*.tmp
