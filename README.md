@@ -3,56 +3,60 @@
 ![Java](https://img.shields.io/badge/Java-17%2B-orange)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-blue)
 ![IntelliJ](https://img.shields.io/badge/IDE-IntelliJ_IDEA-purple)
+![Maven](https://img.shields.io/badge/Build-Maven-yellowgreen)
 
-A Java-based task manager with MySQL integration, allowing users to add, delete, and organize tasks with priorities.
-
-![](screenshots/demo.png)
+A Java Swing application with MySQL backend for managing tasks. Supports adding/deleting tasks with priorities.
 
 ## Table of Contents
-- [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Clone from GitHub](#clone-from-github)
 - [IntelliJ Setup](#intellij-setup)
 - [Database Configuration](#database-configuration)
-- [Running the Application](#running-the-application)
+- [Run the Application](#run-the-application)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
+- [Project Structure](#project-structure)
 
-## Features
-- Add/delete tasks with due dates and priorities
-- MySQL database persistence
-- User-specific task lists
-- Real-time UI updates
+---
 
-## Prerequisites
-- **Java JDK 21+**: [Download](https://adoptium.net/)
-- **MySQL 8.0+**: [Download](https://dev.mysql.com/downloads/mysql/)
-- **IntelliJ IDEA**: [Download](https://www.jetbrains.com/idea/)
-- **Maven Plugin**: Bundled with IntelliJ
+## Clone from GitHub
+
+### Method 1: Using IntelliJ
+1. Open IntelliJ IDEA
+2. **File > New > Project from Version Control...**
+3. Paste URL: `https://github.com/ChiragP-8/TaskManager.git`
+4. Click **Clone**  
+   ![Clone in IntelliJ](screenshots/intellij-clone.png)
+
+### Method 2: Using Terminal
+```bash
+git clone https://github.com/ChiragP-8/TaskManager.git
+cd TaskManager
+```
 
 ---
 
 ## IntelliJ Setup
 
-### 1. Import Project
-1. Open IntelliJ IDEA
-2. **File > Open** > Select the project folder
-3. Choose **"Open as Project"**
+### 1. Configure Project
+1. **File > Open** > Select cloned folder
+2. Enable Maven auto-import:  
+   **View > Tool Windows > Maven** > Click **⟳ Reload**  
+   ![Maven Reload](screenshots/maven-reload.png)
 
-### 2. Configure JDK
-1. **File > Project Structure**
-2. Under **Project SDK**, add JDK 21+ if not detected
-
-### 3. Maven Setup
-1. Enable auto-import:  
-   **View > Tool Windows > Maven** > Enable **"Import Maven Projects Automatically"**
-2. Refresh dependencies:  
-   Click the **Maven Reload** icon (⟳) in the Maven toolbar
+### 2. Set Up JDK
+1. **File > Project Structure** (Ctrl+Alt+Shift+S)
+2. Under **Project SDK**:  
+   - Add JDK 21+ if missing  
+   - Set language level to 17  
+   ![JDK Setup](screenshots/jdk-config.png)
 
 ---
 
 ## Database Configuration
 
 ### 1. MySQL Setup
+1. Start MySQL Server
+2. Run these commands:
 ```sql
 CREATE DATABASE task_db;
 USE task_db;
@@ -71,47 +75,47 @@ CREATE TABLE tasks (
 Edit `src/database/DatabaseManager.java`:
 ```java
 private static final String USER = "root";          // Your MySQL username
-private static final String PASS = "your_password"; // Your MySQL password
+private static final String PASS = "your_password"; // MySQL password
 ```
 
 ---
 
-## Running the Application
+## Run the Application
 
-### 1. Server Setup
-1. **Right-click `src/server/Server.java** 
-2. **Run 'Server.main()'**
+### 1. Start Server
+1. Navigate to `src/server/Server.java`
+2. Right-click > **Run 'Server.main()'**  
    ![Run Server](screenshots/run-server.png)
 
-### 2. Client Setup
-1. **Right-click `src/ui/TaskManagerUI.java** 
-2. **Run 'TaskManagerUI.main()'**
+### 2. Start Client
+1. Navigate to `src/ui/TaskManagerUI.java`
+2. Right-click > **Run 'TaskManagerUI.main()'**  
    ![Run Client](screenshots/run-client.png)
 
 ---
 
 ## Usage
-1. Enter your username when the client launches
-2. **Add Task**:
-   - Fill in Task/Due Date
-   - Select priority
-   - Click **Add**
-3. **Delete Task**:
-   - Select task in table
-   - Click **Delete**
+1. **Add Task**:  
+   - Enter Task/Due Date  
+   - Select Priority  
+   - Click **Add**  
+   ![Add Task](screenshots/add-task.png)
 
-![](screenshots/add-delete-demo.gif)
+2. **Delete Task**:  
+   - Select task in table  
+   - Click **Delete**  
+   ![Delete Task](screenshots/delete-task.png)
 
 ---
 
-## Troubleshooting (IntelliJ Specific)
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| "JDK not valid" error | Configure Project SDK in **File > Project Structure** |
-| Maven dependencies missing | Click **Maven Reload** (⟳) in Maven toolbar |
-| ClassNotFoundException | Rebuild project: **Build > Rebuild Project** |
-| MySQL connection refused | Verify credentials in `DatabaseManager.java` |
+| `java.sql.SQLException: Access denied` | Verify credentials in `DatabaseManager.java` |
+| `ClassNotFoundException` | 1. Maven Reload<br>2. **Build > Rebuild Project** |
+| Server not starting | Check MySQL is running on port 3306 |
+| GUI not updating | Run server before client |
 
 ---
 
@@ -119,14 +123,22 @@ private static final String PASS = "your_password"; // Your MySQL password
 ```
 TaskManager/
 ├── src/
-│   ├── client/          # Client networking
-│   ├── server/          # Server logic
-│   ├── database/        # MySQL handler
-│   └── ui/              # Swing GUI
-├── pom.xml              # Maven config
-└── README.md            # This guide
+│   ├── client/          # Client networking (TCP)
+│   ├── server/          # Server and DB handler
+│   ├── database/        # MySQL connection logic
+│   └── ui/              # Swing GUI components
+├── pom.xml              # Maven dependencies
+├── README.md            # This documentation
+└── screenshots/         # Demo images
 ```
 
 ---
 
-**IntelliJ Support**: Use the built-in terminal (**Alt+F12**) for Git/Maven commands.
+**Report Issues**: [GitHub Issues](https://github.com/ChiragP-8/TaskManager/issues)
+
+---
+
+**Note for Developers**:  
+- Use **Alt+F12** for IntelliJ's built-in terminal  
+- Server logs appear in the **Run** window  
+- Client and server must run simultaneously
