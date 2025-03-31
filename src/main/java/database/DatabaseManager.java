@@ -3,7 +3,7 @@ package database;
 import java.sql.*;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/task_db?useSSL=false";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/task_db?allowPublicKeyRetrieval=true&useSSL=false";
     private static final String USER = "root";
     private static final String PASS = "Chirag@813";
     private Connection conn;
